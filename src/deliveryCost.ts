@@ -3,5 +3,5 @@ export const getDeliveryCost = (
   weight: number,
   distance: number,
 ): number => {
-  return baseDeliveryCost + weight + distance;
+  return baseDeliveryCost + weight * 10 + distance * 5;
 };
