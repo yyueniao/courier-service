@@ -5,11 +5,13 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "pnpm exec tsc --noEmit",
+    "build": "pnpm exec tsc",
+    "type-check": "pnpm exec tsc --noEmit",
     "lint": "pnpm exec eslint .",
     "format": "pnpm exec prettier . --check",
     "format:fix": "pnpm exec prettier . --write",
-    "test": "vitest"
+    "test": "vitest",
+    "cli": "node dist/src/index.js"
   },
   "keywords": [],
   "author": "",
@@ -24,5 +26,8 @@
     "typescript": "5.9.3",
     "typescript-eslint": "8.57.0",
     "vitest": "4.0.18"
+  },
+  "dependencies": {
+    "commander": "14.0.3"
   }
 }
