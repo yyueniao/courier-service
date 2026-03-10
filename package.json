@@ -10,7 +10,8 @@
     "lint": "pnpm exec eslint .",
     "format": "pnpm exec prettier . --check",
     "format:fix": "pnpm exec prettier . --write",
-    "test": "vitest"
+    "test": "vitest",
+    "cli": "node dist/src/index.js"
   },
   "keywords": [],
   "author": "",
