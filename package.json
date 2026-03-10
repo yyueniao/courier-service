@@ -5,7 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "pnpm exec tsc --noEmit",
+    "build": "pnpm exec tsc",
+    "type-check": "pnpm exec tsc --noEmit",
     "lint": "pnpm exec eslint .",
     "format": "pnpm exec prettier . --check",
     "format:fix": "pnpm exec prettier . --write",
