@@ -91,5 +91,5 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
 
-      - name: Run Prettier
+      - name: Run Tests
         run: pnpm test
