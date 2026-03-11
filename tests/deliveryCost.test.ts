@@ -2,12 +2,24 @@ import { expect, test } from "vitest";
 import { getDeliveryCost } from "../src/deliveryCost.js";
 
 test.for([
-  [100, 5, 5, 175],
-  [100, 15, 5, 275],
-  [100, 10, 100, 700],
+  {
+    baseDeliveryCost: 100,
+    packageInfo: { id: "PKG1", weight: 5, distance: 5, offerCode: "OFR001" },
+    expected: 175,
+  },
+  {
+    baseDeliveryCost: 100,
+    packageInfo: { id: "PKG2", weight: 15, distance: 5, offerCode: "OFR002" },
+    expected: 275,
+  },
+  {
+    baseDeliveryCost: 100,
+    packageInfo: { id: "PKG3", weight: 10, distance: 100, offerCode: "OFR003" },
+    expected: 700,
+  },
 ])(
   "When base delivery cost is %i, weight is %i kg, distance is %i km, delivery cost will be %i",
-  ([baseDeliveryCost, weight, distance, expected]) => {
-    expect(getDeliveryCost(baseDeliveryCost, weight, distance)).toBe(expected);
+  ({ baseDeliveryCost, packageInfo, expected }) => {
+    expect(getDeliveryCost(baseDeliveryCost, packageInfo)).toBe(expected);
   },
 );
