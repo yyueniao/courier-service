@@ -1,4 +1,4 @@
-import { getDeliveryCost, getOfferPercentage } from "./deliveryCost.js";
+import { getDeliveryCost, getOfferPercentage } from "./core/deliveryCost.js";
 import { GetDeliveryCostDto, Package } from "./models.js";
 
 export default {

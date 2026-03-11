@@ -1,5 +1,5 @@
-import { offers } from "./data.js";
-import { Package } from "./models.js";
+import { offers } from "../data.js";
+import { Package } from "../models.js";
 
 export const getDeliveryCost = (
   baseDeliveryCost: number,
