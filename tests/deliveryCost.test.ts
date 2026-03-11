@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { getDeliveryCost, getOfferDiscount } from "../src/deliveryCost.js";
+import { getDeliveryCost, getOfferPercentage } from "../src/deliveryCost.js";
 
 test.for([
   {
@@ -35,11 +35,11 @@ test.for([
   },
   {
     packageInfo: { id: "PKG3", weight: 10, distance: 100, offerCode: "OFR003" },
-    expected: 35,
+    expected: 5,
   },
 ])(
   "Case $packageInfo.id: Should discount $expected for $packageInfo.offerCode (Weight: $packageInfo.weight, Dist: $packageInfo.distance)",
   ({ packageInfo, expected }) => {
-    expect(getOfferDiscount(packageInfo)).toBe(expected);
+    expect(getOfferPercentage(packageInfo)).toBe(expected);
   },
 );
