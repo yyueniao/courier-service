@@ -13,3 +13,9 @@ export interface Offer {
   maxWeight: number;
   percentage: number;
 }
+
+export interface GetDeliveryCostDto {
+  id: string;
+  discount: number;
+  totalDeliveryCost: number;
+}

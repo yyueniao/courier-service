@@ -2,7 +2,7 @@ import { stdin, stdout } from "node:process";
 import * as readline from "node:readline/promises";
 import { Package } from "../models.js";
 import { parsePositiveIntSafely } from "../utils.js";
-import { getDeliveryCost } from "../deliveryCost.js";
+import services from "../services.js";
 
 export const deliveryCostController = async (
   baseDeliveryCostInString: string,
@@ -37,7 +37,12 @@ export const deliveryCostController = async (
 
   console.log("\n--- Delivery Cost ---");
   packages.forEach((packageInfo) => {
-    const deliveryCost = getDeliveryCost(baseDeliveryCost, packageInfo);
-    console.log(`${packageInfo.id} 0 ${deliveryCost}`);
+    const deliveryCostdto = services.getDeliveryCost(
+      baseDeliveryCost,
+      packageInfo,
+    );
+    console.log(
+      `${deliveryCostdto.id} ${deliveryCostdto.discount} ${deliveryCostdto.totalDeliveryCost}`,
+    );
   });
 };
