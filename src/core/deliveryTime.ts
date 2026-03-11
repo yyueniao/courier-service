@@ -1,4 +1,5 @@
 import { Package, Trip } from "../models.js";
+import { roundDownToTwoDigits } from "../utils.js";
 
 export const getDeliveryTrip = (speed: number, packages: Package[]): Trip => {
   const sortedPackages = packages.sort(
@@ -8,13 +9,12 @@ export const getDeliveryTrip = (speed: number, packages: Package[]): Trip => {
   return {
     routes: sortedPackages.map(({ id, distance }) => ({
       packageId: id,
-      time: Math.floor((distance / speed) * 100) / 100,
+      time: roundDownToTwoDigits(distance / speed),
     })),
     time:
-      (2 *
-        Math.floor(
-          (sortedPackages[sortedPackages.length - 1].distance / speed) * 100,
-        )) /
-      100,
+      2 *
+      roundDownToTwoDigits(
+        sortedPackages[sortedPackages.length - 1].distance / speed,
+      ),
   };
 };

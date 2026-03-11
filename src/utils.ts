@@ -8,3 +8,7 @@ export const parsePositiveIntSafely = (str: string, name: string): number => {
 
   return num;
 };
+
+export const roundDownToTwoDigits = (num: number): number => {
+  return Math.floor(num * 100) / 100;
+};
