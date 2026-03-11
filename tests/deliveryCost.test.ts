@@ -5,7 +5,7 @@ import {
 } from "../src/core/deliveryCost.js";
 import services from "../src/services.js";
 
-describe("Delivery Domain Logic", () => {
+describe("Delivery Cost Domain Logic", () => {
   describe("getDeliveryCost (Raw Calculation)", () => {
     test.for([
       {

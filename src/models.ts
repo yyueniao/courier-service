@@ -14,6 +14,16 @@ export interface Offer {
   percentage: number;
 }
 
+export interface Route {
+  packageId: string;
+  time: number;
+}
+
+export interface Trip {
+  routes: Route[];
+  time: number;
+}
+
 export interface GetDeliveryCostDto {
   id: string;
   discount: number;
