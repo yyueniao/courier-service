@@ -2,10 +2,16 @@ import { stdin, stdout } from "node:process";
 import * as readline from "node:readline/promises";
 import { Package } from "../models.js";
 import { parsePositiveIntSafely } from "../utils.js";
+import { getDeliveryCost } from "../deliveryCost.js";
 
 export const deliveryCostController = async (
+  baseDeliveryCostInString: string,
   numberOfParcelsInString: string,
 ) => {
+  const baseDeliveryCost = parsePositiveIntSafely(
+    baseDeliveryCostInString,
+    "base delivery cost",
+  );
   const numberOfParcels = parsePositiveIntSafely(
     numberOfParcelsInString,
     "number of parcels",
@@ -29,6 +35,9 @@ export const deliveryCostController = async (
 
   rl.close();
 
-  console.log("\n--- All Data Collected ---");
-  console.log(packages);
+  console.log("\n--- Delivery Cost ---");
+  packages.forEach((packageInfo) => {
+    const deliveryCost = getDeliveryCost(baseDeliveryCost, packageInfo);
+    console.log(`${packageInfo.id} 0 ${deliveryCost}`);
+  });
 };
