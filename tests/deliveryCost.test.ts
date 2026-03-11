@@ -1,5 +1,5 @@
 import { expect, test } from "vitest";
-import { getDeliveryCost } from "../src/deliveryCost.js";
+import { getDeliveryCost, getOfferDiscount } from "../src/deliveryCost.js";
 
 test.for([
   {
@@ -18,8 +18,28 @@ test.for([
     expected: 700,
   },
 ])(
-  "When base delivery cost is %i, weight is %i kg, distance is %i km, delivery cost will be %i",
+  "Case $packageInfo.id: Base $baseDeliveryCost, Weight $packageInfo.weight kg, Dist $packageInfo.distance km -> Cost $expected",
   ({ baseDeliveryCost, packageInfo, expected }) => {
     expect(getDeliveryCost(baseDeliveryCost, packageInfo)).toBe(expected);
+  },
+);
+
+test.for([
+  {
+    packageInfo: { id: "PKG1", weight: 5, distance: 5, offerCode: "OFR001" },
+    expected: 0,
+  },
+  {
+    packageInfo: { id: "PKG2", weight: 15, distance: 5, offerCode: "OFR002" },
+    expected: 0,
+  },
+  {
+    packageInfo: { id: "PKG3", weight: 10, distance: 100, offerCode: "OFR003" },
+    expected: 35,
+  },
+])(
+  "Case $packageInfo.id: Should discount $expected for $packageInfo.offerCode (Weight: $packageInfo.weight, Dist: $packageInfo.distance)",
+  ({ packageInfo, expected }) => {
+    expect(getOfferDiscount(packageInfo)).toBe(expected);
   },
 );

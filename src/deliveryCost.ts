@@ -7,3 +7,8 @@ export const getDeliveryCost = (
   const { weight, distance } = packageInfo;
   return baseDeliveryCost + weight * 10 + distance * 5;
 };
+
+export const getOfferDiscount = (packageInfo: Package): number => {
+  console.log(packageInfo);
+  return 0;
+};
