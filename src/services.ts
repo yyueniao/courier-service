@@ -1,4 +1,4 @@
-import { getDeliveryCost } from "./deliveryCost.js";
+import { getDeliveryCost, getOfferPercentage } from "./deliveryCost.js";
 import { GetDeliveryCostDto, Package } from "./models.js";
 
 export default {
@@ -6,10 +6,13 @@ export default {
     baseDeliveryCost: number,
     packageInfo: Package,
   ): GetDeliveryCostDto => {
+    const deliveryCost = getDeliveryCost(baseDeliveryCost, packageInfo);
+    const offerPercentage = getOfferPercentage(packageInfo);
+    const discount = (deliveryCost * offerPercentage) / 100;
     return {
       id: packageInfo.id,
-      discount: 0,
-      totalDeliveryCost: getDeliveryCost(baseDeliveryCost, packageInfo),
+      discount: discount,
+      totalDeliveryCost: deliveryCost - discount,
     };
   },
 };
