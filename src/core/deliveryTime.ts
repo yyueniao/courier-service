@@ -7,9 +7,9 @@ export const getDeliveryTrip = (speed: number, packages: Package[]): Trip => {
   );
 
   return {
-    routes: sortedPackages.map(({ id, distance }) => ({
-      packageId: id,
-      time: roundDownToTwoDigits(distance / speed),
+    routes: sortedPackages.map((packageInfo) => ({
+      packageInfo,
+      time: roundDownToTwoDigits(packageInfo.distance / speed),
     })),
     time:
       2 *

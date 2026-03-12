@@ -36,13 +36,10 @@ export const deliveryTimeController = async (
   rl.close();
 
   console.log("\n--- Delivery Time ---");
-  packages.forEach((packageInfo) => {
-    const deliveryCostdto = services.getDeliveryCost(
-      baseDeliveryCost,
-      packageInfo,
-    );
+  const deliveryTimeDtos = services.getDeliveryTime(baseDeliveryCost, packages);
+  deliveryTimeDtos.forEach((deliveryTimeDto) => {
     console.log(
-      `${deliveryCostdto.id} ${deliveryCostdto.discount} ${deliveryCostdto.totalDeliveryCost}`,
+      `${deliveryTimeDto.id} ${deliveryTimeDto.discount} ${deliveryTimeDto.totalDeliveryCost} ${deliveryTimeDto.time}`,
     );
   });
 };

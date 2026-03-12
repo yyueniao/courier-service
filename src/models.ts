@@ -15,7 +15,7 @@ export interface Offer {
 }
 
 export interface Route {
-  packageId: string;
+  packageInfo: Package;
   time: number;
 }
 
@@ -28,4 +28,11 @@ export interface GetDeliveryCostDto {
   id: string;
   discount: number;
   totalDeliveryCost: number;
+}
+
+export interface GetDeliveryTimeDto {
+  id: string;
+  discount: number;
+  totalDeliveryCost: number;
+  time: number;
 }

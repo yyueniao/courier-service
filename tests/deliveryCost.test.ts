@@ -38,6 +38,16 @@ describe("Delivery Cost Domain Logic", () => {
         },
         expected: 700,
       },
+      {
+        baseDeliveryCost: 100,
+        packageInfo: {
+          id: "PKG4",
+          weight: 110,
+          distance: 60,
+          offerCode: "NA",
+        },
+        expected: 1500,
+      },
     ])(
       "Case $packageInfo.id: Base $baseDeliveryCost, W $packageInfo.weight, D $packageInfo.distance -> Raw Cost: $expected",
       ({ baseDeliveryCost, packageInfo, expected }) => {
@@ -74,6 +84,16 @@ describe("Delivery Cost Domain Logic", () => {
           offerCode: "OFR003",
         },
         expected: 5,
+      },
+      {
+        baseDeliveryCost: 100,
+        packageInfo: {
+          id: "PKG4",
+          weight: 110,
+          distance: 60,
+          offerCode: "OFR002",
+        },
+        expected: 7,
       },
     ])(
       "Case $packageInfo.id: Offer $packageInfo.offerCode -> Discount: $expected%",
@@ -130,6 +150,20 @@ describe("Delivery Application Service", () => {
           offerCode: "OFR003",
         },
         expected: { id: "PKG5", discount: 30.05, totalDeliveryCost: 570.95 },
+      },
+      {
+        baseDeliveryCost: 100,
+        packageInfo: {
+          id: "PKG6",
+          weight: 110,
+          distance: 60,
+          offerCode: "OFR002",
+        },
+        expected: {
+          discount: 105,
+          id: "PKG6",
+          totalDeliveryCost: 1395,
+        },
       },
     ])(
       "$name ($packageInfo.id)",
