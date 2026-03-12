@@ -24,6 +24,12 @@ export interface Trip {
   time: number;
 }
 
+export interface Shipment {
+  packages: Package[];
+  totalWeight: number;
+  totalDistance: number;
+}
+
 export interface VehicleInfo {
   numberOfVehicles: number;
   maxSpeed: number;

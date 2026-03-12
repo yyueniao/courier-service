@@ -1,8 +1,40 @@
 import { describe, test, expect } from "vitest";
-import { getDeliveryTrip, getTotalWeight } from "../src/core/deliveryTime.js";
+import {
+  getBestShipment,
+  getDeliveryTrip,
+  getTotalWeight,
+} from "../src/core/deliveryTime.js";
 import services from "../src/services.js";
 
 describe("Delivery Domain Logic", () => {
+  describe("getBestShipment (Optimization Logic)", () => {
+    test.for([
+      {
+        maxWeight: 200,
+        packages: [
+          { id: "PKG1", weight: 50, distance: 30, offerCode: "OFR001" },
+          { id: "PKG2", weight: 75, distance: 125, offerCode: "OFR008" },
+          { id: "PKG3", weight: 175, distance: 100, offerCode: "OFR003" },
+          { id: "PKG4", weight: 110, distance: 60, offerCode: "OFR002" },
+          { id: "PKG5", weight: 155, distance: 95, offerCode: "NA" },
+        ],
+        expected: {
+          packages: [
+            { id: "PKG2", weight: 75, distance: 125, offerCode: "OFR008" },
+            { id: "PKG4", weight: 110, distance: 60, offerCode: "OFR002" },
+          ],
+          totalDistance: 125,
+          totalWeight: 185,
+        },
+      },
+    ])(
+      "MaxWeight $maxWeight: Selecting optimal subset from $packages.length packages",
+      ({ maxWeight, packages, expected }) => {
+        expect(getBestShipment(maxWeight, packages)).toStrictEqual(expected);
+      },
+    );
+  });
+
   describe("getDeliveryTrip", () => {
     test.for([
       {
