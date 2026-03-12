@@ -1,5 +1,5 @@
-import { getTotalDeliveryCost } from "./core/deliveryCost.js";
-import { getDeliveryTrip } from "./core/deliveryTime.js";
+import { getTotalDeliveryCost } from "./core/deliveryCost/getTotalDeliveryCost.js";
+import { getDeliveryTrip } from "./core/deliveryTime/getDeliveryTrip.js";
 import {
   GetDeliveryCostDto,
   GetDeliveryTimeDto,

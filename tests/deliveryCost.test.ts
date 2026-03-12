@@ -1,9 +1,7 @@
 import { describe, expect, test } from "vitest";
-import {
-  getDeliveryCost,
-  getOfferPercentage,
-} from "../src/core/deliveryCost.js";
 import services from "../src/services.js";
+import { getDeliveryCost } from "../src/core/deliveryCost/getDeliveryCost.js";
+import { getOfferPercentage } from "../src/core/deliveryCost/getOfferPercentage.js";
 
 describe("Delivery Cost Domain Logic", () => {
   describe("getDeliveryCost (Raw Calculation)", () => {

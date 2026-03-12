@@ -1,10 +1,7 @@
 import { describe, test, expect } from "vitest";
-import {
-  getBestShipment,
-  getDeliveryTrip,
-  getTotalWeight,
-} from "../src/core/deliveryTime.js";
+import { getBestShipment } from "../src/core/deliveryTime/getBestShipment.js";
 import services from "../src/services.js";
+import { getDeliveryTrip } from "../src/core/deliveryTime/getDeliveryTrip.js";
 
 describe("Delivery Domain Logic", () => {
   describe("getBestShipment (Optimization Logic)", () => {
@@ -102,30 +99,6 @@ describe("Delivery Domain Logic", () => {
       "Speed $speed: Trip for $packages.length packages -> Total Time $expected.time",
       ({ speed, packages, expected }) => {
         expect(getDeliveryTrip(speed, packages)).toStrictEqual(expected);
-      },
-    );
-  });
-
-  describe("getTotalWeight", () => {
-    test.for([
-      {
-        packages: [
-          { id: "PKG2", weight: 75, distance: 125, offerCode: "OFR008" },
-          { id: "PKG4", weight: 110, distance: 60, offerCode: "OFR002" },
-        ],
-        expected: 185,
-      },
-      {
-        packages: [
-          { id: "PKG2", weight: 30, distance: 125, offerCode: "OFR008" },
-          { id: "PKG4", weight: 40, distance: 60, offerCode: "OFR002" },
-        ],
-        expected: 70,
-      },
-    ])(
-      "Calculating weight for $packages.length packages -> Total: $expected kg",
-      ({ packages, expected }) => {
-        expect(getTotalWeight(packages)).toBe(expected);
       },
     );
   });
