@@ -53,6 +53,11 @@ describe("Delivery Application Services", () => {
           { id: "PKG2", weight: 75, distance: 125, offerCode: "OFR008" },
           { id: "PKG4", weight: 110, distance: 60, offerCode: "OFR002" },
         ],
+        vehicleInfo: {
+          numberOfVehicles: 2,
+          maxSpeed: 70,
+          maxCarriableWeight: 200,
+        },
         expected: [
           {
             id: "PKG4",
@@ -70,16 +75,12 @@ describe("Delivery Application Services", () => {
       },
     ])(
       "Base $baseDeliveryCost: $packages.length packages -> Returns IDs: $expected.0.id, $expected.1.id",
-      ({ baseDeliveryCost, packages, expected }) => {
+      ({ baseDeliveryCost, packages, vehicleInfo, expected }) => {
         expect(
           services.getDeliveryTime({
             baseDeliveryCost,
             packages,
-            vehicleInfo: {
-              numberOfVehicles: 1,
-              maxCarriableWeight: 0,
-              maxSpeed: 0,
-            },
+            vehicleInfo,
           }),
         ).toStrictEqual(expected);
       },

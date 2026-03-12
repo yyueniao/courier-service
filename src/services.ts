@@ -28,8 +28,8 @@ export default {
     packages: Package[];
     vehicleInfo: VehicleInfo;
   }): GetDeliveryTimeDto[] {
-    const { baseDeliveryCost, packages } = props;
-    const trip = getDeliveryTrip(70, packages);
+    const { baseDeliveryCost, packages, vehicleInfo } = props;
+    const trip = getDeliveryTrip(vehicleInfo.maxSpeed, packages);
     return trip.routes.map((route) => {
       const { discount, totalDeliveryCost } = getTotalDeliveryCost(
         baseDeliveryCost,
