@@ -27,6 +27,37 @@ describe("Delivery Domain Logic", () => {
           totalWeight: 185,
         },
       },
+      {
+        maxWeight: 200,
+        packages: [
+          { id: "PKG1", weight: 50, distance: 30, offerCode: "OFR001" },
+          { id: "PKG3", weight: 175, distance: 100, offerCode: "OFR003" },
+          { id: "PKG5", weight: 155, distance: 95, offerCode: "NA" },
+        ],
+        expected: {
+          packages: [
+            { id: "PKG3", weight: 175, distance: 100, offerCode: "OFR003" },
+          ],
+          totalDistance: 100,
+          totalWeight: 175,
+        },
+      },
+      {
+        maxWeight: 200,
+        packages: [
+          { id: "PKG1", weight: 50, distance: 30, offerCode: "OFR001" },
+          { id: "PKG3", weight: 175, distance: 100, offerCode: "OFR003" },
+          { id: "PKG5", weight: 150, distance: 95, offerCode: "NA" },
+        ],
+        expected: {
+          packages: [
+            { id: "PKG1", weight: 50, distance: 30, offerCode: "OFR001" },
+            { id: "PKG5", weight: 150, distance: 95, offerCode: "NA" },
+          ],
+          totalDistance: 95,
+          totalWeight: 200,
+        },
+      },
     ])(
       "MaxWeight $maxWeight: Selecting optimal subset from $packages.length packages",
       ({ maxWeight, packages, expected }) => {
