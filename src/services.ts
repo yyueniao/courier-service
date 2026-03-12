@@ -1,6 +1,11 @@
 import { getTotalDeliveryCost } from "./core/deliveryCost.js";
 import { getDeliveryTrip } from "./core/deliveryTime.js";
-import { GetDeliveryCostDto, GetDeliveryTimeDto, Package } from "./models.js";
+import {
+  GetDeliveryCostDto,
+  GetDeliveryTimeDto,
+  Package,
+  VehicleInfo,
+} from "./models.js";
 
 export default {
   getDeliveryCost(
@@ -21,6 +26,7 @@ export default {
   getDeliveryTime(props: {
     baseDeliveryCost: number;
     packages: Package[];
+    vehicleInfo: VehicleInfo;
   }): GetDeliveryTimeDto[] {
     const { baseDeliveryCost, packages } = props;
     const trip = getDeliveryTrip(70, packages);

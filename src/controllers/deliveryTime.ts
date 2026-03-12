@@ -33,12 +33,34 @@ export const deliveryTimeController = async (
     });
   }
 
+  const vehicleInfo = await rl.question(
+    `Please input vehicle information: (<no_of_vehicles> <max_speed> <max_carriable_weight>)\n`,
+  );
+  const [
+    numberOfVehiclesInString,
+    maxSpeedInString,
+    maxCarriableWeightInString,
+  ] = vehicleInfo.split(" ");
+  const numberOfVehicles = parsePositiveIntSafely(
+    numberOfVehiclesInString,
+    "number of parcels",
+  );
+  const maxSpeed = parsePositiveIntSafely(
+    maxSpeedInString,
+    "number of parcels",
+  );
+  const maxCarriableWeight = parsePositiveIntSafely(
+    maxCarriableWeightInString,
+    "number of parcels",
+  );
+
   rl.close();
 
   console.log("\n--- Delivery Time ---");
   const deliveryTimeDtos = services.getDeliveryTime({
     baseDeliveryCost,
     packages,
+    vehicleInfo: { numberOfVehicles, maxSpeed, maxCarriableWeight },
   });
   deliveryTimeDtos.forEach((deliveryTimeDto) => {
     console.log(

@@ -72,7 +72,15 @@ describe("Delivery Application Services", () => {
       "Base $baseDeliveryCost: $packages.length packages -> Returns IDs: $expected.0.id, $expected.1.id",
       ({ baseDeliveryCost, packages, expected }) => {
         expect(
-          services.getDeliveryTime({ baseDeliveryCost, packages }),
+          services.getDeliveryTime({
+            baseDeliveryCost,
+            packages,
+            vehicleInfo: {
+              numberOfVehicles: 1,
+              maxCarriableWeight: 0,
+              maxSpeed: 0,
+            },
+          }),
         ).toStrictEqual(expected);
       },
     );

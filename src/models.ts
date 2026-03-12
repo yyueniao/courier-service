@@ -24,6 +24,12 @@ export interface Trip {
   time: number;
 }
 
+export interface VehicleInfo {
+  numberOfVehicles: number;
+  maxSpeed: number;
+  maxCarriableWeight: number;
+}
+
 export interface GetDeliveryCostDto {
   id: string;
   discount: number;
