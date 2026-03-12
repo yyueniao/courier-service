@@ -18,10 +18,11 @@ export default {
       totalDeliveryCost,
     };
   },
-  getDeliveryTime(
-    baseDeliveryCost: number,
-    packages: Package[],
-  ): GetDeliveryTimeDto[] {
+  getDeliveryTime(props: {
+    baseDeliveryCost: number;
+    packages: Package[];
+  }): GetDeliveryTimeDto[] {
+    const { baseDeliveryCost, packages } = props;
     const trip = getDeliveryTrip(70, packages);
     return trip.routes.map((route) => {
       const { discount, totalDeliveryCost } = getTotalDeliveryCost(
