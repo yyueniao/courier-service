@@ -18,3 +18,11 @@ export const getDeliveryTrip = (speed: number, packages: Package[]): Trip => {
       ),
   };
 };
+
+export const getTotalWeight = (packages: Package[]): number => {
+  let sum = 0;
+  packages.forEach((packageInfo) => {
+    sum += packageInfo.weight;
+  });
+  return sum;
+};

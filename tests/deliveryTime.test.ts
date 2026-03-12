@@ -1,5 +1,5 @@
 import { describe, test, expect } from "vitest";
-import { getDeliveryTrip } from "../src/core/deliveryTime.js";
+import { getDeliveryTrip, getTotalWeight } from "../src/core/deliveryTime.js";
 import services from "../src/services.js";
 
 describe("Delivery Domain Logic", () => {
@@ -42,6 +42,30 @@ describe("Delivery Domain Logic", () => {
       },
     );
   });
+
+  describe("getTotalWeight", () => {
+    test.for([
+      {
+        packages: [
+          { id: "PKG2", weight: 75, distance: 125, offerCode: "OFR008" },
+          { id: "PKG4", weight: 110, distance: 60, offerCode: "OFR002" },
+        ],
+        expected: 185,
+      },
+      {
+        packages: [
+          { id: "PKG2", weight: 30, distance: 125, offerCode: "OFR008" },
+          { id: "PKG4", weight: 40, distance: 60, offerCode: "OFR002" },
+        ],
+        expected: 70,
+      },
+    ])(
+      "Calculating weight for $packages.length packages -> Total: $expected kg",
+      ({ packages, expected }) => {
+        expect(getTotalWeight(packages)).toBe(expected);
+      },
+    );
+  });
 });
 
 describe("Delivery Application Services", () => {
@@ -74,7 +98,7 @@ describe("Delivery Application Services", () => {
         ],
       },
     ])(
-      "Base $baseDeliveryCost: $packages.length packages -> Returns IDs: $expected.0.id, $expected.1.id",
+      "Service Call: $packages.length packages with $vehicleInfo.numberOfVehicles vehicles -> Check DTO Accuracy",
       ({ baseDeliveryCost, packages, vehicleInfo, expected }) => {
         expect(
           services.getDeliveryTime({
