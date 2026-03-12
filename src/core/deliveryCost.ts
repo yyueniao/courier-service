@@ -30,3 +30,19 @@ export const getOfferPercentage = (packageInfo: Package): number => {
 
   return 0;
 };
+
+export const getTotalDeliveryCost = (
+  baseDeliveryCost: number,
+  packageInfo: Package,
+): {
+  discount: number;
+  totalDeliveryCost: number;
+} => {
+  const deliveryCost = getDeliveryCost(baseDeliveryCost, packageInfo);
+  const offerPercentage = getOfferPercentage(packageInfo);
+  const discount = (deliveryCost * offerPercentage) / 100;
+  return {
+    discount,
+    totalDeliveryCost: deliveryCost - discount,
+  };
+};

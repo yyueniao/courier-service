@@ -1,4 +1,4 @@
-import { getDeliveryCost, getOfferPercentage } from "./core/deliveryCost.js";
+import { getTotalDeliveryCost } from "./core/deliveryCost.js";
 import { getDeliveryTrip } from "./core/deliveryTime.js";
 import { GetDeliveryCostDto, GetDeliveryTimeDto, Package } from "./models.js";
 
@@ -7,13 +7,15 @@ export default {
     baseDeliveryCost: number,
     packageInfo: Package,
   ): GetDeliveryCostDto {
-    const deliveryCost = getDeliveryCost(baseDeliveryCost, packageInfo);
-    const offerPercentage = getOfferPercentage(packageInfo);
-    const discount = (deliveryCost * offerPercentage) / 100;
+    const { discount, totalDeliveryCost } = getTotalDeliveryCost(
+      baseDeliveryCost,
+      packageInfo,
+    );
+
     return {
       id: packageInfo.id,
-      discount: discount,
-      totalDeliveryCost: deliveryCost - discount,
+      discount,
+      totalDeliveryCost,
     };
   },
   getDeliveryTime(
@@ -22,13 +24,15 @@ export default {
   ): GetDeliveryTimeDto[] {
     const trip = getDeliveryTrip(70, packages);
     return trip.routes.map((route) => {
-      const deliveryCost = getDeliveryCost(baseDeliveryCost, route.packageInfo);
-      const offerPercentage = getOfferPercentage(route.packageInfo);
-      const discount = (deliveryCost * offerPercentage) / 100;
+      const { discount, totalDeliveryCost } = getTotalDeliveryCost(
+        baseDeliveryCost,
+        route.packageInfo,
+      );
+
       return {
         id: route.packageInfo.id,
-        discount: discount,
-        totalDeliveryCost: deliveryCost - discount,
+        discount,
+        totalDeliveryCost,
         time: route.time,
       };
     });
