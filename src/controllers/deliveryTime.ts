@@ -1,7 +1,7 @@
 import { stdin, stdout } from "node:process";
 import * as readline from "node:readline/promises";
 import { Package } from "../models.js";
-import { parsePositiveIntSafely } from "../utils.js";
+import { askForInput, parsePositiveIntSafely } from "../utils.js";
 import services from "../services.js";
 
 export const deliveryTimeController = async (
@@ -23,10 +23,12 @@ export const deliveryTimeController = async (
   console.log(`--- Starting Input for ${numberOfParcels} Packages ---`);
 
   for (let i = 0; i < numberOfParcels; i++) {
-    const packageInfo = await rl.question(
+    const [id, weight, distance, offerCode] = await askForInput(
+      rl,
       `Please input package ${i + 1} Info:\n`,
+      4,
     );
-    const [id, weight, distance, offerCode] = packageInfo.split(" ");
+
     packages.push({
       index: i,
       id,
@@ -36,14 +38,16 @@ export const deliveryTimeController = async (
     });
   }
 
-  const vehicleInfo = await rl.question(
-    `Please input vehicle information: (<no_of_vehicles> <max_speed> <max_carriable_weight>)\n`,
-  );
   const [
     numberOfVehiclesInString,
     maxSpeedInString,
     maxCarriableWeightInString,
-  ] = vehicleInfo.split(" ");
+  ] = await askForInput(
+    rl,
+    `Please input vehicle information: (<no_of_vehicles> <max_speed> <max_carriable_weight>)\n`,
+    3,
+  );
+
   const numberOfVehicles = parsePositiveIntSafely(
     numberOfVehiclesInString,
     "number of parcels",

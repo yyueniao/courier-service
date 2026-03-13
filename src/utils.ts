@@ -1,4 +1,5 @@
 import { Package, Shipment } from "./models.js";
+import * as readline from "node:readline/promises";
 
 export const parsePositiveIntSafely = (str: string, name: string): number => {
   const num = parseInt(str, 10);
@@ -30,4 +31,20 @@ export const packagesToShipment = (packages: Package[]): Shipment => {
   );
 
   return { packages, totalDistance, totalWeight };
+};
+
+export const askForInput = async (
+  rl: readline.Interface,
+  question: string,
+  numberOfInput: number,
+): Promise<string[]> => {
+  const rawInput = await rl.question(question);
+  const input = rawInput.split(" ");
+
+  if (input.length !== numberOfInput) {
+    throw new Error(
+      `Expected ${numberOfInput} inputs, but got ${input.length}.`,
+    );
+  }
+  return input;
 };
