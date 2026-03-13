@@ -5,8 +5,7 @@ export const parsePositiveIntSafely = (str: string, name: string): number => {
   const num = parseInt(str, 10);
 
   if (isNaN(num) || num <= 0) {
-    console.error(`Error: Please provide a valid ${name}.`);
-    process.exit(1);
+    throw new Error(`Error: Please provide a valid ${name}.`);
   }
 
   return num;
@@ -43,7 +42,7 @@ export const askForInput = async (
 
   if (input.length !== numberOfInput) {
     throw new Error(
-      `Expected ${numberOfInput} inputs, but got ${input.length}.`,
+      `Error: Expected ${numberOfInput} inputs, but got ${input.length}.`,
     );
   }
   return input;
