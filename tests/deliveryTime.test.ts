@@ -217,7 +217,7 @@ describe("Delivery Domain Logic", () => {
                 distance: 60,
                 offerCode: "OFR002",
               },
-              time: 0.85 + 2.22,
+              time: 3.07,
             },
             {
               packageInfo: {
@@ -227,10 +227,10 @@ describe("Delivery Domain Logic", () => {
                 distance: 125,
                 offerCode: "OFR008",
               },
-              time: 1.78 + 2.22,
+              time: 4,
             },
           ],
-          time: 3.56 + 2.22,
+          time: 5.78,
         },
       },
       {
