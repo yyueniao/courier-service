@@ -1,41 +1,12 @@
-import { stdin, stdout } from "node:process";
-import * as readline from "node:readline/promises";
+import readline from "node:readline/promises";
 import { Package } from "../models.js";
-import { parsePositiveIntSafely } from "../utils.js";
 import services from "../services.js";
 
 export const deliveryCostController = async (
-  baseDeliveryCostInString: string,
-  numberOfParcelsInString: string,
+  rl: readline.Interface,
+  baseDeliveryCost: number,
+  packages: Package[],
 ) => {
-  const baseDeliveryCost = parsePositiveIntSafely(
-    baseDeliveryCostInString,
-    "base delivery cost",
-  );
-  const numberOfParcels = parsePositiveIntSafely(
-    numberOfParcelsInString,
-    "number of parcels",
-  );
-
-  const rl = readline.createInterface({ input: stdin, output: stdout });
-  const packages: Package[] = [];
-
-  console.log(`--- Starting Input for ${numberOfParcels} Packages ---`);
-
-  for (let i = 0; i < numberOfParcels; i++) {
-    const packageInfo = await rl.question(
-      `Please input package ${i + 1} Info:\n`,
-    );
-    const [id, weight, distance, offerCode] = packageInfo.split(" ");
-    packages.push({
-      index: i,
-      id,
-      weight: parsePositiveIntSafely(weight, "package weight"),
-      distance: parsePositiveIntSafely(distance, "delivery distance"),
-      offerCode,
-    });
-  }
-
   rl.close();
 
   console.log("\n--- Delivery Cost ---");
