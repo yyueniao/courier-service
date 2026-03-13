@@ -4,7 +4,7 @@ import { Package } from "../models.js";
 import { parsePositiveIntSafely } from "../utils.js";
 import services from "../services.js";
 
-export const deliveryCostController = async (
+export const deliveryTimeController = async (
   baseDeliveryCostInString: string,
   numberOfParcelsInString: string,
 ) => {
@@ -36,16 +36,38 @@ export const deliveryCostController = async (
     });
   }
 
+  const vehicleInfo = await rl.question(
+    `Please input vehicle information: (<no_of_vehicles> <max_speed> <max_carriable_weight>)\n`,
+  );
+  const [
+    numberOfVehiclesInString,
+    maxSpeedInString,
+    maxCarriableWeightInString,
+  ] = vehicleInfo.split(" ");
+  const numberOfVehicles = parsePositiveIntSafely(
+    numberOfVehiclesInString,
+    "number of parcels",
+  );
+  const maxSpeed = parsePositiveIntSafely(
+    maxSpeedInString,
+    "number of parcels",
+  );
+  const maxCarriableWeight = parsePositiveIntSafely(
+    maxCarriableWeightInString,
+    "number of parcels",
+  );
+
   rl.close();
 
-  console.log("\n--- Delivery Cost ---");
-  packages.forEach((packageInfo) => {
-    const deliveryCostdto = services.getDeliveryCost(
-      baseDeliveryCost,
-      packageInfo,
-    );
+  console.log("\n--- Delivery Time ---");
+  const deliveryTimeDtos = services.getDeliveryTime({
+    baseDeliveryCost,
+    packages,
+    vehicleInfo: { numberOfVehicles, maxSpeed, maxCarriableWeight },
+  });
+  deliveryTimeDtos.forEach((deliveryTimeDto) => {
     console.log(
-      `${deliveryCostdto.id} ${deliveryCostdto.discount} ${deliveryCostdto.totalDeliveryCost}`,
+      `${deliveryTimeDto.id} ${deliveryTimeDto.discount} ${deliveryTimeDto.totalDeliveryCost} ${deliveryTimeDto.time}`,
     );
   });
 };

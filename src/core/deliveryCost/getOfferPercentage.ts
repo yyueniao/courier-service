@@ -1,13 +1,5 @@
-import { offers } from "./data.js";
-import { Package } from "./models.js";
-
-export const getDeliveryCost = (
-  baseDeliveryCost: number,
-  packageInfo: Package,
-): number => {
-  const { weight, distance } = packageInfo;
-  return baseDeliveryCost + weight * 10 + distance * 5;
-};
+import { offers } from "../../data.js";
+import { Package } from "../../models.js";
 
 export const getOfferPercentage = (packageInfo: Package): number => {
   const offer = offers.find((o) => o.id === packageInfo.offerCode);

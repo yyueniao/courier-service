@@ -1,13 +1,15 @@
 import { describe, expect, test } from "vitest";
-import { getDeliveryCost, getOfferPercentage } from "../src/deliveryCost.js";
 import services from "../src/services.js";
+import { getDeliveryCost } from "../src/core/deliveryCost/getDeliveryCost.js";
+import { getOfferPercentage } from "../src/core/deliveryCost/getOfferPercentage.js";
 
-describe("Delivery Domain Logic", () => {
+describe("Delivery Cost Domain Logic", () => {
   describe("getDeliveryCost (Raw Calculation)", () => {
     test.for([
       {
         baseDeliveryCost: 100,
         packageInfo: {
+          index: 0,
           id: "PKG1",
           weight: 5,
           distance: 5,
@@ -18,6 +20,7 @@ describe("Delivery Domain Logic", () => {
       {
         baseDeliveryCost: 100,
         packageInfo: {
+          index: 1,
           id: "PKG2",
           weight: 15,
           distance: 5,
@@ -28,12 +31,24 @@ describe("Delivery Domain Logic", () => {
       {
         baseDeliveryCost: 100,
         packageInfo: {
+          index: 2,
           id: "PKG3",
           weight: 10,
           distance: 100,
           offerCode: "OFR003",
         },
         expected: 700,
+      },
+      {
+        baseDeliveryCost: 100,
+        packageInfo: {
+          index: 3,
+          id: "PKG4",
+          weight: 110,
+          distance: 60,
+          offerCode: "NA",
+        },
+        expected: 1500,
       },
     ])(
       "Case $packageInfo.id: Base $baseDeliveryCost, W $packageInfo.weight, D $packageInfo.distance -> Raw Cost: $expected",
@@ -47,6 +62,7 @@ describe("Delivery Domain Logic", () => {
     test.for([
       {
         packageInfo: {
+          index: 0,
           id: "PKG1",
           weight: 5,
           distance: 5,
@@ -56,6 +72,7 @@ describe("Delivery Domain Logic", () => {
       },
       {
         packageInfo: {
+          index: 1,
           id: "PKG2",
           weight: 15,
           distance: 5,
@@ -65,12 +82,24 @@ describe("Delivery Domain Logic", () => {
       },
       {
         packageInfo: {
+          index: 2,
           id: "PKG3",
           weight: 10,
           distance: 100,
           offerCode: "OFR003",
         },
         expected: 5,
+      },
+      {
+        baseDeliveryCost: 100,
+        packageInfo: {
+          index: 3,
+          id: "PKG4",
+          weight: 110,
+          distance: 60,
+          offerCode: "OFR002",
+        },
+        expected: 7,
       },
     ])(
       "Case $packageInfo.id: Offer $packageInfo.offerCode -> Discount: $expected%",
@@ -88,6 +117,7 @@ describe("Delivery Application Service", () => {
         name: "No Discount: Criteria not met",
         baseDeliveryCost: 100,
         packageInfo: {
+          index: 0,
           id: "PKG1",
           weight: 5,
           distance: 5,
@@ -99,17 +129,23 @@ describe("Delivery Application Service", () => {
         name: "Valid Discount: Criteria met",
         baseDeliveryCost: 100,
         packageInfo: {
+          index: 0,
           id: "PKG3",
           weight: 10,
           distance: 100,
           offerCode: "OFR003",
         },
-        expected: { id: "PKG3", discount: 35, totalDeliveryCost: 665 },
+        expected: {
+          id: "PKG3",
+          discount: 35,
+          totalDeliveryCost: 665,
+        },
       },
       {
         name: "Edge Case: Invalid Offer Code",
         baseDeliveryCost: 100,
         packageInfo: {
+          index: 0,
           id: "PKG4",
           weight: 10,
           distance: 10,
@@ -121,12 +157,32 @@ describe("Delivery Application Service", () => {
         name: "Math Check: Floating point precision",
         baseDeliveryCost: 1,
         packageInfo: {
+          index: 1,
           id: "PKG5",
           weight: 10,
           distance: 100,
           offerCode: "OFR003",
         },
-        expected: { id: "PKG5", discount: 30.05, totalDeliveryCost: 570.95 },
+        expected: {
+          id: "PKG5",
+          discount: 30.05,
+          totalDeliveryCost: 570.95,
+        },
+      },
+      {
+        baseDeliveryCost: 100,
+        packageInfo: {
+          index: 0,
+          id: "PKG6",
+          weight: 110,
+          distance: 60,
+          offerCode: "OFR002",
+        },
+        expected: {
+          discount: 105,
+          id: "PKG6",
+          totalDeliveryCost: 1395,
+        },
       },
     ])(
       "$name ($packageInfo.id)",
