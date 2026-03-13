@@ -9,6 +9,7 @@ describe("Delivery Cost Domain Logic", () => {
       {
         baseDeliveryCost: 100,
         packageInfo: {
+          index: 0,
           id: "PKG1",
           weight: 5,
           distance: 5,
@@ -19,6 +20,7 @@ describe("Delivery Cost Domain Logic", () => {
       {
         baseDeliveryCost: 100,
         packageInfo: {
+          index: 1,
           id: "PKG2",
           weight: 15,
           distance: 5,
@@ -29,6 +31,7 @@ describe("Delivery Cost Domain Logic", () => {
       {
         baseDeliveryCost: 100,
         packageInfo: {
+          index: 2,
           id: "PKG3",
           weight: 10,
           distance: 100,
@@ -39,6 +42,7 @@ describe("Delivery Cost Domain Logic", () => {
       {
         baseDeliveryCost: 100,
         packageInfo: {
+          index: 3,
           id: "PKG4",
           weight: 110,
           distance: 60,
@@ -58,6 +62,7 @@ describe("Delivery Cost Domain Logic", () => {
     test.for([
       {
         packageInfo: {
+          index: 0,
           id: "PKG1",
           weight: 5,
           distance: 5,
@@ -67,6 +72,7 @@ describe("Delivery Cost Domain Logic", () => {
       },
       {
         packageInfo: {
+          index: 1,
           id: "PKG2",
           weight: 15,
           distance: 5,
@@ -76,6 +82,7 @@ describe("Delivery Cost Domain Logic", () => {
       },
       {
         packageInfo: {
+          index: 2,
           id: "PKG3",
           weight: 10,
           distance: 100,
@@ -86,6 +93,7 @@ describe("Delivery Cost Domain Logic", () => {
       {
         baseDeliveryCost: 100,
         packageInfo: {
+          index: 3,
           id: "PKG4",
           weight: 110,
           distance: 60,
@@ -109,6 +117,7 @@ describe("Delivery Application Service", () => {
         name: "No Discount: Criteria not met",
         baseDeliveryCost: 100,
         packageInfo: {
+          index: 0,
           id: "PKG1",
           weight: 5,
           distance: 5,
@@ -120,17 +129,23 @@ describe("Delivery Application Service", () => {
         name: "Valid Discount: Criteria met",
         baseDeliveryCost: 100,
         packageInfo: {
+          index: 0,
           id: "PKG3",
           weight: 10,
           distance: 100,
           offerCode: "OFR003",
         },
-        expected: { id: "PKG3", discount: 35, totalDeliveryCost: 665 },
+        expected: {
+          id: "PKG3",
+          discount: 35,
+          totalDeliveryCost: 665,
+        },
       },
       {
         name: "Edge Case: Invalid Offer Code",
         baseDeliveryCost: 100,
         packageInfo: {
+          index: 0,
           id: "PKG4",
           weight: 10,
           distance: 10,
@@ -142,16 +157,22 @@ describe("Delivery Application Service", () => {
         name: "Math Check: Floating point precision",
         baseDeliveryCost: 1,
         packageInfo: {
+          index: 1,
           id: "PKG5",
           weight: 10,
           distance: 100,
           offerCode: "OFR003",
         },
-        expected: { id: "PKG5", discount: 30.05, totalDeliveryCost: 570.95 },
+        expected: {
+          id: "PKG5",
+          discount: 30.05,
+          totalDeliveryCost: 570.95,
+        },
       },
       {
         baseDeliveryCost: 100,
         packageInfo: {
+          index: 0,
           id: "PKG6",
           weight: 110,
           distance: 60,
