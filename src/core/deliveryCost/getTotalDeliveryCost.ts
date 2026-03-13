@@ -1,5 +1,5 @@
 import { Package } from "../../models.js";
-import { getDeliveryCost } from "./getDeliveryCost.js";
+import { getRawDeliveryCost } from "./getRawDeliveryCost.js";
 import { getOfferPercentage } from "./getOfferPercentage.js";
 
 export const getTotalDeliveryCost = (
@@ -9,7 +9,7 @@ export const getTotalDeliveryCost = (
   discount: number;
   totalDeliveryCost: number;
 } => {
-  const deliveryCost = getDeliveryCost(baseDeliveryCost, packageInfo);
+  const deliveryCost = getRawDeliveryCost(baseDeliveryCost, packageInfo);
   const offerPercentage = getOfferPercentage(packageInfo);
   const discount = (deliveryCost * offerPercentage) / 100;
   return {

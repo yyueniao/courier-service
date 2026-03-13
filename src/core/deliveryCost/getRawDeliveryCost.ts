@@ -1,6 +1,6 @@
 import { Package } from "../../models.js";
 
-export const getDeliveryCost = (
+export const getRawDeliveryCost = (
   baseDeliveryCost: number,
   packageInfo: Package,
 ): number => {
