@@ -71,6 +71,7 @@ describe("Delivery Domain Logic", () => {
           { id: "PKG2", weight: 75, distance: 125, offerCode: "OFR008" },
           { id: "PKG4", weight: 110, distance: 60, offerCode: "OFR002" },
         ],
+        currentTime: 0,
         expected: {
           routes: [
             {
@@ -95,10 +96,43 @@ describe("Delivery Domain Logic", () => {
           time: 3.56,
         },
       },
+      {
+        speed: 70,
+        packages: [
+          { id: "PKG2", weight: 75, distance: 125, offerCode: "OFR008" },
+          { id: "PKG4", weight: 110, distance: 60, offerCode: "OFR002" },
+        ],
+        currentTime: 2.22,
+        expected: {
+          routes: [
+            {
+              packageInfo: {
+                id: "PKG4",
+                weight: 110,
+                distance: 60,
+                offerCode: "OFR002",
+              },
+              time: 0.85 + 2.22,
+            },
+            {
+              packageInfo: {
+                id: "PKG2",
+                weight: 75,
+                distance: 125,
+                offerCode: "OFR008",
+              },
+              time: 1.78 + 2.22,
+            },
+          ],
+          time: 3.56 + 2.22,
+        },
+      },
     ])(
       "Speed $speed: Trip for $packages.length packages -> Total Time $expected.time",
-      ({ speed, packages, expected }) => {
-        expect(getDeliveryTrip(speed, packages)).toStrictEqual(expected);
+      ({ speed, packages, currentTime, expected }) => {
+        expect(getDeliveryTrip(speed, packages, currentTime)).toStrictEqual(
+          expected,
+        );
       },
     );
   });
@@ -114,7 +148,7 @@ describe("Delivery Application Services", () => {
           { id: "PKG4", weight: 110, distance: 60, offerCode: "OFR002" },
         ],
         vehicleInfo: {
-          numberOfVehicles: 2,
+          numberOfVehicles: 1,
           maxSpeed: 70,
           maxCarriableWeight: 200,
         },
@@ -130,6 +164,39 @@ describe("Delivery Application Services", () => {
             time: 1.78,
             discount: 0,
             totalDeliveryCost: 1475,
+          },
+        ],
+      },
+      {
+        baseDeliveryCost: 100,
+        packages: [
+          { id: "PKG1", weight: 50, distance: 30, offerCode: "OFR001" },
+          { id: "PKG2", weight: 75, distance: 125, offerCode: "OFR008" },
+          { id: "PKG4", weight: 110, distance: 60, offerCode: "OFR002" },
+        ],
+        vehicleInfo: {
+          numberOfVehicles: 1,
+          maxSpeed: 70,
+          maxCarriableWeight: 200,
+        },
+        expected: [
+          {
+            id: "PKG4",
+            time: 0.85,
+            discount: 105,
+            totalDeliveryCost: 1395,
+          },
+          {
+            id: "PKG2",
+            time: 1.78,
+            discount: 0,
+            totalDeliveryCost: 1475,
+          },
+          {
+            id: "PKG1",
+            time: 3.98,
+            discount: 0,
+            totalDeliveryCost: 750,
           },
         ],
       },

@@ -1,9 +1,11 @@
 import { getTotalDeliveryCost } from "./core/deliveryCost/getTotalDeliveryCost.js";
+import { getBestShipment } from "./core/deliveryTime/getBestShipment.js";
 import { getDeliveryTrip } from "./core/deliveryTime/getDeliveryTrip.js";
 import {
   GetDeliveryCostDto,
   GetDeliveryTimeDto,
   Package,
+  Route,
   VehicleInfo,
 } from "./models.js";
 
@@ -29,8 +31,27 @@ export default {
     vehicleInfo: VehicleInfo;
   }): GetDeliveryTimeDto[] {
     const { baseDeliveryCost, packages, vehicleInfo } = props;
-    const trip = getDeliveryTrip(vehicleInfo.maxSpeed, packages);
-    return trip.routes.map((route) => {
+    let packagesRemaining = packages;
+    const routes: Route[] = [];
+    let currentTime = 0;
+    while (packagesRemaining.length > 0) {
+      const shipment = getBestShipment(
+        vehicleInfo.maxCarriableWeight,
+        packagesRemaining,
+      );
+      const trip = getDeliveryTrip(
+        vehicleInfo.maxSpeed,
+        shipment.packages,
+        currentTime,
+      );
+      const packageIds = shipment.packages.map((packageInfo) => packageInfo.id);
+      packagesRemaining = packagesRemaining.filter(
+        (packageInfo) => !packageIds.includes(packageInfo.id),
+      );
+      routes.push(...trip.routes);
+      currentTime = trip.time;
+    }
+    return routes.map((route) => {
       const { discount, totalDeliveryCost } = getTotalDeliveryCost(
         baseDeliveryCost,
         route.packageInfo,
