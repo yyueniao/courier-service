@@ -51,18 +51,22 @@ export default {
       routes.push(...trip.routes);
       currentTime = trip.time;
     }
-    return routes.map((route) => {
-      const { discount, totalDeliveryCost } = getTotalDeliveryCost(
-        baseDeliveryCost,
-        route.packageInfo,
-      );
+    return routes
+      .sort(
+        (route1, route2) => route1.packageInfo.index - route2.packageInfo.index,
+      )
+      .map((route) => {
+        const { discount, totalDeliveryCost } = getTotalDeliveryCost(
+          baseDeliveryCost,
+          route.packageInfo,
+        );
 
-      return {
-        id: route.packageInfo.id,
-        discount,
-        totalDeliveryCost,
-        time: route.time,
-      };
-    });
+        return {
+          id: route.packageInfo.id,
+          discount,
+          totalDeliveryCost,
+          time: route.time,
+        };
+      });
   },
 };

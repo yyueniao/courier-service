@@ -1,4 +1,5 @@
 export interface Package {
+  index: number;
   id: string;
   weight: number;
   distance: number;

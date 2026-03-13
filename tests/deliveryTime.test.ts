@@ -9,16 +9,52 @@ describe("Delivery Domain Logic", () => {
       {
         maxWeight: 200,
         packages: [
-          { id: "PKG1", weight: 50, distance: 30, offerCode: "OFR001" },
-          { id: "PKG2", weight: 75, distance: 125, offerCode: "OFR008" },
-          { id: "PKG3", weight: 175, distance: 100, offerCode: "OFR003" },
-          { id: "PKG4", weight: 110, distance: 60, offerCode: "OFR002" },
-          { id: "PKG5", weight: 155, distance: 95, offerCode: "NA" },
+          {
+            index: 0,
+            id: "PKG1",
+            weight: 50,
+            distance: 30,
+            offerCode: "OFR001",
+          },
+          {
+            index: 1,
+            id: "PKG2",
+            weight: 75,
+            distance: 125,
+            offerCode: "OFR008",
+          },
+          {
+            index: 2,
+            id: "PKG3",
+            weight: 175,
+            distance: 100,
+            offerCode: "OFR003",
+          },
+          {
+            index: 3,
+            id: "PKG4",
+            weight: 110,
+            distance: 60,
+            offerCode: "OFR002",
+          },
+          { index: 4, id: "PKG5", weight: 155, distance: 95, offerCode: "NA" },
         ],
         expected: {
           packages: [
-            { id: "PKG2", weight: 75, distance: 125, offerCode: "OFR008" },
-            { id: "PKG4", weight: 110, distance: 60, offerCode: "OFR002" },
+            {
+              index: 1,
+              id: "PKG2",
+              weight: 75,
+              distance: 125,
+              offerCode: "OFR008",
+            },
+            {
+              index: 3,
+              id: "PKG4",
+              weight: 110,
+              distance: 60,
+              offerCode: "OFR002",
+            },
           ],
           totalDistance: 125,
           totalWeight: 185,
@@ -27,13 +63,31 @@ describe("Delivery Domain Logic", () => {
       {
         maxWeight: 200,
         packages: [
-          { id: "PKG1", weight: 50, distance: 30, offerCode: "OFR001" },
-          { id: "PKG3", weight: 175, distance: 100, offerCode: "OFR003" },
-          { id: "PKG5", weight: 155, distance: 95, offerCode: "NA" },
+          {
+            index: 0,
+            id: "PKG1",
+            weight: 50,
+            distance: 30,
+            offerCode: "OFR001",
+          },
+          {
+            index: 1,
+            id: "PKG3",
+            weight: 175,
+            distance: 100,
+            offerCode: "OFR003",
+          },
+          { index: 2, id: "PKG5", weight: 155, distance: 95, offerCode: "NA" },
         ],
         expected: {
           packages: [
-            { id: "PKG3", weight: 175, distance: 100, offerCode: "OFR003" },
+            {
+              index: 1,
+              id: "PKG3",
+              weight: 175,
+              distance: 100,
+              offerCode: "OFR003",
+            },
           ],
           totalDistance: 100,
           totalWeight: 175,
@@ -42,14 +96,38 @@ describe("Delivery Domain Logic", () => {
       {
         maxWeight: 200,
         packages: [
-          { id: "PKG1", weight: 50, distance: 30, offerCode: "OFR001" },
-          { id: "PKG3", weight: 175, distance: 100, offerCode: "OFR003" },
-          { id: "PKG5", weight: 150, distance: 95, offerCode: "NA" },
+          {
+            index: 0,
+            id: "PKG1",
+            weight: 50,
+            distance: 30,
+            offerCode: "OFR001",
+          },
+          {
+            index: 1,
+            id: "PKG3",
+            weight: 175,
+            distance: 100,
+            offerCode: "OFR003",
+          },
+          { index: 2, id: "PKG5", weight: 150, distance: 95, offerCode: "NA" },
         ],
         expected: {
           packages: [
-            { id: "PKG1", weight: 50, distance: 30, offerCode: "OFR001" },
-            { id: "PKG5", weight: 150, distance: 95, offerCode: "NA" },
+            {
+              index: 0,
+              id: "PKG1",
+              weight: 50,
+              distance: 30,
+              offerCode: "OFR001",
+            },
+            {
+              index: 2,
+              id: "PKG5",
+              weight: 150,
+              distance: 95,
+              offerCode: "NA",
+            },
           ],
           totalDistance: 95,
           totalWeight: 200,
@@ -68,14 +146,27 @@ describe("Delivery Domain Logic", () => {
       {
         speed: 70,
         packages: [
-          { id: "PKG2", weight: 75, distance: 125, offerCode: "OFR008" },
-          { id: "PKG4", weight: 110, distance: 60, offerCode: "OFR002" },
+          {
+            index: 0,
+            id: "PKG2",
+            weight: 75,
+            distance: 125,
+            offerCode: "OFR008",
+          },
+          {
+            index: 1,
+            id: "PKG4",
+            weight: 110,
+            distance: 60,
+            offerCode: "OFR002",
+          },
         ],
         currentTime: 0,
         expected: {
           routes: [
             {
               packageInfo: {
+                index: 1,
                 id: "PKG4",
                 weight: 110,
                 distance: 60,
@@ -85,6 +176,7 @@ describe("Delivery Domain Logic", () => {
             },
             {
               packageInfo: {
+                index: 0,
                 id: "PKG2",
                 weight: 75,
                 distance: 125,
@@ -99,14 +191,27 @@ describe("Delivery Domain Logic", () => {
       {
         speed: 70,
         packages: [
-          { id: "PKG2", weight: 75, distance: 125, offerCode: "OFR008" },
-          { id: "PKG4", weight: 110, distance: 60, offerCode: "OFR002" },
+          {
+            index: 0,
+            id: "PKG2",
+            weight: 75,
+            distance: 125,
+            offerCode: "OFR008",
+          },
+          {
+            index: 1,
+            id: "PKG4",
+            weight: 110,
+            distance: 60,
+            offerCode: "OFR002",
+          },
         ],
         currentTime: 2.22,
         expected: {
           routes: [
             {
               packageInfo: {
+                index: 1,
                 id: "PKG4",
                 weight: 110,
                 distance: 60,
@@ -116,6 +221,7 @@ describe("Delivery Domain Logic", () => {
             },
             {
               packageInfo: {
+                index: 0,
                 id: "PKG2",
                 weight: 75,
                 distance: 125,
@@ -144,8 +250,20 @@ describe("Delivery Application Services", () => {
       {
         baseDeliveryCost: 100,
         packages: [
-          { id: "PKG2", weight: 75, distance: 125, offerCode: "OFR008" },
-          { id: "PKG4", weight: 110, distance: 60, offerCode: "OFR002" },
+          {
+            index: 0,
+            id: "PKG2",
+            weight: 75,
+            distance: 125,
+            offerCode: "OFR008",
+          },
+          {
+            index: 1,
+            id: "PKG4",
+            weight: 110,
+            distance: 60,
+            offerCode: "OFR002",
+          },
         ],
         vehicleInfo: {
           numberOfVehicles: 1,
@@ -154,25 +272,43 @@ describe("Delivery Application Services", () => {
         },
         expected: [
           {
-            id: "PKG4",
-            time: 0.85,
-            discount: 105,
-            totalDeliveryCost: 1395,
-          },
-          {
             id: "PKG2",
             time: 1.78,
             discount: 0,
             totalDeliveryCost: 1475,
+          },
+          {
+            id: "PKG4",
+            time: 0.85,
+            discount: 105,
+            totalDeliveryCost: 1395,
           },
         ],
       },
       {
         baseDeliveryCost: 100,
         packages: [
-          { id: "PKG1", weight: 50, distance: 30, offerCode: "OFR001" },
-          { id: "PKG2", weight: 75, distance: 125, offerCode: "OFR008" },
-          { id: "PKG4", weight: 110, distance: 60, offerCode: "OFR002" },
+          {
+            index: 0,
+            id: "PKG1",
+            weight: 50,
+            distance: 30,
+            offerCode: "OFR001",
+          },
+          {
+            index: 1,
+            id: "PKG2",
+            weight: 75,
+            distance: 125,
+            offerCode: "OFR008",
+          },
+          {
+            index: 2,
+            id: "PKG4",
+            weight: 110,
+            distance: 60,
+            offerCode: "OFR002",
+          },
         ],
         vehicleInfo: {
           numberOfVehicles: 1,
@@ -181,10 +317,10 @@ describe("Delivery Application Services", () => {
         },
         expected: [
           {
-            id: "PKG4",
-            time: 0.85,
-            discount: 105,
-            totalDeliveryCost: 1395,
+            id: "PKG1",
+            time: 3.98,
+            discount: 0,
+            totalDeliveryCost: 750,
           },
           {
             id: "PKG2",
@@ -193,10 +329,10 @@ describe("Delivery Application Services", () => {
             totalDeliveryCost: 1475,
           },
           {
-            id: "PKG1",
-            time: 3.98,
-            discount: 0,
-            totalDeliveryCost: 750,
+            id: "PKG4",
+            time: 0.85,
+            discount: 105,
+            totalDeliveryCost: 1395,
           },
         ],
       },

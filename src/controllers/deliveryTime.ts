@@ -22,10 +22,13 @@ export const deliveryTimeController = async (
 
   console.log(`--- Starting Input for ${numberOfParcels} Packages ---`);
 
-  for (let i = 1; i <= numberOfParcels; i++) {
-    const packageInfo = await rl.question(`Please input package ${i} Info:\n`);
+  for (let i = 0; i < numberOfParcels; i++) {
+    const packageInfo = await rl.question(
+      `Please input package ${i + 1} Info:\n`,
+    );
     const [id, weight, distance, offerCode] = packageInfo.split(" ");
     packages.push({
+      index: i,
       id,
       weight: parsePositiveIntSafely(weight, "package weight"),
       distance: parsePositiveIntSafely(distance, "delivery distance"),
