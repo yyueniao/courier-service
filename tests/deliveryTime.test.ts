@@ -336,6 +336,77 @@ describe("Delivery Application Services", () => {
           },
         ],
       },
+      {
+        baseDeliveryCost: 100,
+        packages: [
+          {
+            index: 0,
+            id: "PKG1",
+            weight: 50,
+            distance: 30,
+            offerCode: "OFR001",
+          },
+          {
+            index: 1,
+            id: "PKG2",
+            weight: 75,
+            distance: 125,
+            offerCode: "OFR008",
+          },
+          {
+            index: 2,
+            id: "PKG3",
+            weight: 175,
+            distance: 100,
+            offerCode: "OFR003",
+          },
+          {
+            index: 3,
+            id: "PKG4",
+            weight: 110,
+            distance: 60,
+            offerCode: "OFR002",
+          },
+          { index: 4, id: "PKG5", weight: 155, distance: 95, offerCode: "NA" },
+        ],
+        vehicleInfo: {
+          numberOfVehicles: 2,
+          maxSpeed: 70,
+          maxCarriableWeight: 200,
+        },
+        expected: [
+          {
+            id: "PKG1",
+            time: 3.98,
+            discount: 0,
+            totalDeliveryCost: 750,
+          },
+          {
+            id: "PKG2",
+            time: 1.78,
+            discount: 0,
+            totalDeliveryCost: 1475,
+          },
+          {
+            id: "PKG3",
+            time: 1.42,
+            discount: 0,
+            totalDeliveryCost: 2350,
+          },
+          {
+            id: "PKG4",
+            time: 0.85,
+            discount: 105,
+            totalDeliveryCost: 1395,
+          },
+          {
+            id: "PKG5",
+            time: 4.19,
+            discount: 0,
+            totalDeliveryCost: 2125,
+          },
+        ],
+      },
     ])(
       "Service Call: $packages.length packages with $vehicleInfo.numberOfVehicles vehicles -> Check DTO Accuracy",
       ({ baseDeliveryCost, packages, vehicleInfo, expected }) => {

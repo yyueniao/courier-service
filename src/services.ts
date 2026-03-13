@@ -33,7 +33,9 @@ export default {
     const { baseDeliveryCost, packages, vehicleInfo } = props;
     let packagesRemaining = packages;
     const routes: Route[] = [];
-    let currentTime = 0;
+    let vehiclesAvailableTime: number[] = Array(
+      vehicleInfo.numberOfVehicles,
+    ).fill(0);
     while (packagesRemaining.length > 0) {
       const shipment = getBestShipment(
         vehicleInfo.maxCarriableWeight,
@@ -42,14 +44,17 @@ export default {
       const trip = getDeliveryTrip(
         vehicleInfo.maxSpeed,
         shipment.packages,
-        currentTime,
+        vehiclesAvailableTime[0],
       );
       const packageIds = shipment.packages.map((packageInfo) => packageInfo.id);
       packagesRemaining = packagesRemaining.filter(
         (packageInfo) => !packageIds.includes(packageInfo.id),
       );
       routes.push(...trip.routes);
-      currentTime = trip.time;
+      vehiclesAvailableTime = [
+        vehiclesAvailableTime[0] + trip.time,
+        ...vehiclesAvailableTime.slice(1),
+      ].sort();
     }
     return routes
       .sort(
