@@ -13,7 +13,7 @@ export const getDeliveryTrip = (
   return {
     routes: sortedPackages.map((packageInfo) => ({
       packageInfo,
-      time: roundDownToTwoDigits(packageInfo.distance / speed) + currentTime,
+      time: roundDownToTwoDigits(packageInfo.distance / speed + currentTime),
     })),
     time:
       2 *
