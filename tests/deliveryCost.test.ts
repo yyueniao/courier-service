@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import services from "../src/services.js";
-import { getDeliveryCost } from "../src/core/deliveryCost/getDeliveryCost.js";
+import { getRawDeliveryCost } from "../src/core/deliveryCost/getRawDeliveryCost.js";
 import { getOfferPercentage } from "../src/core/deliveryCost/getOfferPercentage.js";
 
 describe("Delivery Cost Domain Logic", () => {
@@ -53,7 +53,9 @@ describe("Delivery Cost Domain Logic", () => {
     ])(
       "Case $packageInfo.id: Base $baseDeliveryCost, W $packageInfo.weight, D $packageInfo.distance -> Raw Cost: $expected",
       ({ baseDeliveryCost, packageInfo, expected }) => {
-        expect(getDeliveryCost(baseDeliveryCost, packageInfo)).toBe(expected);
+        expect(getRawDeliveryCost(baseDeliveryCost, packageInfo)).toBe(
+          expected,
+        );
       },
     );
   });
