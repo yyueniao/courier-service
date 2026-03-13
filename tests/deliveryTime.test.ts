@@ -233,6 +233,28 @@ describe("Delivery Domain Logic", () => {
           time: 3.56 + 2.22,
         },
       },
+      {
+        speed: 70,
+        packages: [
+          { index: 4, id: "PKG5", weight: 155, distance: 95, offerCode: "NA" },
+        ],
+        currentTime: 2.84,
+        expected: {
+          routes: [
+            {
+              packageInfo: {
+                index: 4,
+                id: "PKG5",
+                weight: 155,
+                distance: 95,
+                offerCode: "NA",
+              },
+              time: 4.19,
+            },
+          ],
+          time: 5.54,
+        },
+      },
     ])(
       "Speed $speed: Trip for $packages.length packages -> Total Time $expected.time",
       ({ speed, packages, currentTime, expected }) => {
