@@ -25,4 +25,12 @@ export const offers: Offer[] = [
     maxWeight: 150,
     percentage: 5,
   },
+  {
+    id: "FLAT100",
+    minDistance: null,
+    maxDistance: null,
+    minWeight: null,
+    maxWeight: null,
+    percentage: 50,
+  },
 ];

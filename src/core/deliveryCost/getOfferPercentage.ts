@@ -8,15 +8,25 @@ export const getOfferPercentage = (packageInfo: Package): number => {
     return 0;
   }
 
-  const isWeightValid =
-    packageInfo.weight >= offer.minWeight &&
-    packageInfo.weight <= offer.maxWeight;
+  const isReachMinWeight =
+    offer.minWeight === null ? true : packageInfo.weight >= offer.minWeight;
+  const isReachMaxWeight =
+    offer.maxWeight === null ? true : packageInfo.weight <= offer.maxWeight;
+  const isReachMaxDistance =
+    offer.maxDistance === null
+      ? true
+      : packageInfo.distance <= offer.maxDistance;
+  const isReachMinDistance =
+    offer.minDistance === null
+      ? true
+      : packageInfo.distance >= offer.minDistance;
 
-  const isDistanceValid =
-    packageInfo.distance >= offer.minDistance &&
-    packageInfo.distance <= offer.maxDistance;
-
-  if (isWeightValid && isDistanceValid) {
+  if (
+    isReachMinWeight &&
+    isReachMaxWeight &&
+    isReachMinDistance &&
+    isReachMaxDistance
+  ) {
     return offer.percentage;
   }
 

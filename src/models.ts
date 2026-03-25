@@ -8,10 +8,10 @@ export interface Package {
 
 export interface Offer {
   id: string;
-  minDistance: number;
-  maxDistance: number;
-  minWeight: number;
-  maxWeight: number;
+  minDistance: number | null;
+  maxDistance: number | null;
+  minWeight: number | null;
+  maxWeight: number | null;
   percentage: number;
 }
 

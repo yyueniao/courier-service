@@ -84,6 +84,16 @@ describe("Delivery Cost Domain Logic", () => {
       },
       {
         packageInfo: {
+          index: 1,
+          id: "PKG2",
+          weight: 10000,
+          distance: 50000,
+          offerCode: "FLAT100",
+        },
+        expected: 50,
+      },
+      {
+        packageInfo: {
           index: 2,
           id: "PKG3",
           weight: 10,
