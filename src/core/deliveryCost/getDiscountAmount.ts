@@ -1,7 +1,11 @@
 import { offers } from "../../data.js";
 import { Package } from "../../models.js";
+import { getRawDeliveryCost } from "./getRawDeliveryCost.js";
 
-export const getOfferPercentage = (packageInfo: Package): number => {
+export const getDiscountAmount = (
+  baseDeliveryCost: number,
+  packageInfo: Package,
+): number => {
   const offer = offers.find((o) => o.id === packageInfo.offerCode);
 
   if (!offer) {
@@ -22,13 +26,21 @@ export const getOfferPercentage = (packageInfo: Package): number => {
       : packageInfo.distance >= offer.minDistance;
 
   if (
-    isReachMinWeight &&
-    isReachMaxWeight &&
-    isReachMinDistance &&
-    isReachMaxDistance
+    !(
+      isReachMinWeight &&
+      isReachMaxWeight &&
+      isReachMinDistance &&
+      isReachMaxDistance
+    )
   ) {
-    return offer.percentage;
+    return 0;
   }
 
-  return 0;
+  if (offer.type === "amount") {
+    return offer.value;
+  }
+
+  const rawCost = getRawDeliveryCost(baseDeliveryCost, packageInfo);
+  const discount = (rawCost * offer.value) / 100;
+  return discount;
 };

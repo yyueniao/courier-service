@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
 import services from "../src/services.js";
 import { getRawDeliveryCost } from "../src/core/deliveryCost/getRawDeliveryCost.js";
-import { getOfferPercentage } from "../src/core/deliveryCost/getOfferPercentage.js";
+import { getDiscountAmount } from "../src/core/deliveryCost/getDiscountAmount.js";
 
 describe("Delivery Cost Domain Logic", () => {
   describe("getDeliveryCost (Raw Calculation)", () => {
@@ -60,9 +60,10 @@ describe("Delivery Cost Domain Logic", () => {
     );
   });
 
-  describe("getOfferPercentage (Discount Qualification)", () => {
+  describe("get discount amount", () => {
     test.for([
       {
+        baseDeliveryCost: 100,
         packageInfo: {
           index: 0,
           id: "PKG1",
@@ -73,6 +74,7 @@ describe("Delivery Cost Domain Logic", () => {
         expected: 0,
       },
       {
+        baseDeliveryCost: 100,
         packageInfo: {
           index: 1,
           id: "PKG2",
@@ -83,6 +85,7 @@ describe("Delivery Cost Domain Logic", () => {
         expected: 0,
       },
       {
+        baseDeliveryCost: 100,
         packageInfo: {
           index: 1,
           id: "PKG2",
@@ -90,9 +93,10 @@ describe("Delivery Cost Domain Logic", () => {
           distance: 50000,
           offerCode: "FLAT100",
         },
-        expected: 50,
+        expected: 100,
       },
       {
+        baseDeliveryCost: 100,
         packageInfo: {
           index: 2,
           id: "PKG3",
@@ -100,7 +104,9 @@ describe("Delivery Cost Domain Logic", () => {
           distance: 100,
           offerCode: "OFR003",
         },
-        expected: 5,
+        // Raw: 100 + 10*10 + 100*5 = 700
+        // Discount: 700 * 5% = 35
+        expected: 35,
       },
       {
         baseDeliveryCost: 100,
@@ -111,12 +117,14 @@ describe("Delivery Cost Domain Logic", () => {
           distance: 60,
           offerCode: "OFR002",
         },
-        expected: 7,
+        // Raw: 100 + 110*10 + 60*5 = 1500
+        // Discount: 1500 * 7% = 105
+        expected: 105,
       },
     ])(
       "Case $packageInfo.id: Offer $packageInfo.offerCode -> Discount: $expected%",
-      ({ packageInfo, expected }) => {
-        expect(getOfferPercentage(packageInfo)).toBe(expected);
+      ({ baseDeliveryCost, packageInfo, expected }) => {
+        expect(getDiscountAmount(baseDeliveryCost, packageInfo)).toBe(expected);
       },
     );
   });
@@ -151,6 +159,22 @@ describe("Delivery Application Service", () => {
           id: "PKG3",
           discount: 35,
           totalDeliveryCost: 665,
+        },
+      },
+      {
+        name: "Valid Discount: by amount",
+        baseDeliveryCost: 100,
+        packageInfo: {
+          index: 0,
+          id: "PKG3",
+          weight: 10,
+          distance: 100,
+          offerCode: "FLAT100",
+        },
+        expected: {
+          id: "PKG3",
+          discount: 100,
+          totalDeliveryCost: 600,
         },
       },
       {

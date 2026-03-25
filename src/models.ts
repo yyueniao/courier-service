@@ -12,7 +12,8 @@ export interface Offer {
   maxDistance: number | null;
   minWeight: number | null;
   maxWeight: number | null;
-  percentage: number;
+  value: number;
+  type: "percentage" | "amount";
 }
 
 export interface Route {

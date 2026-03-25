@@ -7,7 +7,8 @@ export const offers: Offer[] = [
     maxDistance: 199,
     minWeight: 70,
     maxWeight: 200,
-    percentage: 10,
+    value: 10,
+    type: "percentage",
   },
   {
     id: "OFR002",
@@ -15,7 +16,8 @@ export const offers: Offer[] = [
     maxDistance: 150,
     minWeight: 100,
     maxWeight: 250,
-    percentage: 7,
+    value: 7,
+    type: "percentage",
   },
   {
     id: "OFR003",
@@ -23,7 +25,8 @@ export const offers: Offer[] = [
     maxDistance: 250,
     minWeight: 10,
     maxWeight: 150,
-    percentage: 5,
+    value: 5,
+    type: "percentage",
   },
   {
     id: "FLAT100",
@@ -31,6 +34,7 @@ export const offers: Offer[] = [
     maxDistance: null,
     minWeight: null,
     maxWeight: null,
-    percentage: 50,
+    value: 100,
+    type: "amount",
   },
 ];
